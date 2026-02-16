@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM docker.io/library/ubuntu:questing
 
 ARG DEBIAN_FRONTEND=noninteractive
 
