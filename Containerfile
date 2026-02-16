@@ -36,7 +36,7 @@ RUN echo "HOME=/var/home" | tee -a "/etc/default/useradd" && \
     printf '[composefs]\nenabled = yes\n[sysroot]\nreadonly = true\n' | tee "/usr/lib/ostree/prepare-root.conf"
 
 RUN <<_MAIN_INSTALL
-    #!/bin/bash -e
+    #!/bin/sh -e
     
     # Add repositories
     apt update
