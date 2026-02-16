@@ -35,19 +35,6 @@ RUN echo "HOME=/var/home" | tee -a "/etc/default/useradd" && \
     printf "d /var/roothome 0700 root root -\nd /run/media 0755 root root -" | tee -a "/usr/lib/tmpfiles.d/bootc-base-dirs.conf" && \
     printf '[composefs]\nenabled = yes\n[sysroot]\nreadonly = true\n' | tee "/usr/lib/ostree/prepare-root.conf"
 
-ENV \
-    PUID=1000 \
-    PGID=1000 \
-    UMASK=000 \
-    UNAME="user" \
-    HOME="/home/user" \
-    TZ="America/New_York" \
-    DEBIAN_FRONTEND=noninteractive \
-    LANG=en_US.UTF-8 \
-    LANGUAGE=en_US \
-    LC_ALL=en_US.UTF-8 \
-    XDG_RUNTIME_DIR=/tmp/.X11-unix
-
 RUN <<_MAIN_INSTALL
     #!/bin/bash -e
     
