@@ -16,8 +16,9 @@ ENV RUSTUP_HOME=/tmp/rust
 RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root --mount=type=tmpfs,dst=/boot \
     apt update -y && \
     apt install -y git curl make build-essential go-md2man libzstd-dev pkgconf dracut libostree-dev ostree && \
-    curl --proto '=https' --tlsv1.2 -sSf "https://sh.rustup.rs" | sh -s -- --profile minimal -y && /tmp/rust/bin/cargo install openssl-sys && \
+    curl --proto '=https' --tlsv1.2 -sSf "https://sh.rustup.rs" | sh -s -- --profile minimal -y && \
     git clone "https://github.com/bootc-dev/bootc.git" /tmp/bootc && \
+    /tmp/rust/bin/cargo -C /tmp/bootc add openssl-sys && \
     sh -c ". ${RUSTUP_HOME}/env ; make -C /tmp/bootc bin install-all" && \
     printf "systemdsystemconfdir=/etc/systemd/system\nsystemdsystemunitdir=/usr/lib/systemd/system\n" | tee "/usr/lib/dracut/dracut.conf.d/30-bootcrew-fix-bootc-module.conf" && \
     printf 'reproducible=yes\nhostonly=no\ncompress=zstd\nadd_dracutmodules+=" bootc "' | tee "/usr/lib/dracut/dracut.conf.d/30-bootcrew-bootc-container-build.conf" && \
