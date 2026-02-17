@@ -35,22 +35,16 @@ RUN echo "HOME=/var/home" | tee -a "/etc/default/useradd" && \
     printf "d /var/roothome 0700 root root -\nd /run/media 0755 root root -" | tee -a "/usr/lib/tmpfiles.d/bootc-base-dirs.conf" && \
     printf '[composefs]\nenabled = yes\n[sysroot]\nreadonly = true\n' | tee "/usr/lib/ostree/prepare-root.conf"
 
-RUN <<_MAIN_INSTALL
-    #!/bin/sh -e
-    
-    # Add repositories
-    apt update
-    apt install -y software-properties-common
-    add-apt-repository ppa:zorinos/stable
-    add-apt-repository ppa:zorinos/patches
-    add-apt-repository ppa:zorinos/apps
-    add-apt-repository ppa:kisak/kisak-mesa
-    add-apt-repository multiverse
-    add-apt-repository universe
-    apt update
-    apt-get install -y zorin-os-keyring
-    
-    # Core deps
+RUN apt update && \
+    apt install -y software-properties-common  && \
+    add-apt-repository ppa:zorinos/stable  && \
+    add-apt-repository ppa:zorinos/patches  && \
+    add-apt-repository ppa:zorinos/apps  && \
+    add-apt-repository ppa:kisak/kisak-mesa  && \
+    add-apt-repository multiverse  && \
+    add-apt-repository universe  && \
+    apt update  && \
+    apt-get install -y zorin-os-keyring  && \
     apt install -y --no-install-recommends \
         xwayland \
         libglx-mesa0 libgl1 \
@@ -100,12 +94,9 @@ RUN <<_MAIN_INSTALL
         vulkan-tools \
         zip unzip p7zip-full \
         gnome-software gnome-software-plugin-flatpak \
-        sway zorin-os-desktop zorin-appearance 
-    
-    # Apt cleanup
-    apt-get clean
+        sway zorin-os-desktop zorin-appearance  && \
+    apt-get clean  && \
     rm -rf /var/lib/apt/lists/*
-    _MAIN_INSTALL
 
 # https://bootc-dev.github.io/bootc/bootc-images.html#standard-metadata-for-bootc-compatible-images
 LABEL containers.bootc 1
