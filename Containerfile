@@ -1,4 +1,4 @@
-FROM docker.io/library/ubuntu:questing
+FROM docker.io/library/ubuntu:jammy
 
 ARG DEBIAN_FRONTEND=noninteractive
 
