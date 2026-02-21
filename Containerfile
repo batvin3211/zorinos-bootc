@@ -36,7 +36,7 @@ RUN echo "HOME=/var/home" | tee -a "/etc/default/useradd" && \
     printf '[composefs]\nenabled = yes\n[sysroot]\nreadonly = true\n' | tee "/usr/lib/ostree/prepare-root.conf"
 
 RUN apt update && \
-    apt install -y software-properties-common  && \
+    apt-get install -y software-properties-common  && \
     add-apt-repository ppa:zorinos/stable  && \
     add-apt-repository ppa:zorinos/patches  && \
     add-apt-repository ppa:zorinos/apps  && \
@@ -45,7 +45,7 @@ RUN apt update && \
     add-apt-repository universe  && \
     apt update  && \
     apt-get install -y zorin-os-keyring  && \
-    apt install -y --no-install-recommends \
+    apt-get install -y --no-install-recommends \
         xwayland \
         libglx-mesa0 libgl1 \
         systemd \
